@@ -1,23 +1,19 @@
 global:
-  slack_api_url: 'https://hooks.slack.com/services/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'
+  slack_api_url: 'https://hooks.slack.com/services/T9J8LB9B3/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
   resolve_timeout: 5s
 route:
   group_wait: 30s
   group_interval: 30s
-  receiver: 'litermi-notifications'
+  receiver: 'mail-notifications'
   routes:
     - match:
         severity: 'critical'
       continue: true
-      receiver: 'litermi-notifications'
+      receiver: 'mail-notifications'
     - match:
         severity: 'warning'
       continue: true
-      receiver: 'litermi-notifications'
-    - match:
-        severity: 'critical'
-      continue: true
-      receiver: 'litermi-notifications2'
+      receiver: 'mail-notifications'
     - match:
         severity: 'critical'
       continue: true
@@ -27,29 +23,19 @@ route:
       receiver: 'slack-notifications'
 
 receivers:
-  - name: 'litermi-notifications'
+  - name: 'mail-notifications'
     email_configs:
-    - to: sysadmin@litermi.com
-      from: sysadmin-alerts@litermi.com
-      smarthost: smtp.gmail.com:587
-      auth_username: sysadmin-alerts@litermi.com
-      auth_identity: sysadmin-alerts@litermi.com
-      auth_password: L/H4sIxnQsw0D
-      send_resolved: true
-
-  - name: 'litermi-notifications2'
-    email_configs:
-    - to: prometheus@trillonario.com
-      from: sysadmin-alerts@litermi.com
-      smarthost: smtp.gmail.com:587
-      auth_username: sysadmin-alerts@litermi.com
-      auth_identity: sysadmin-alerts@litermi.com
-      auth_password: L/H4sIxnQsw0D
+    - to: from@domain.com
+      from: to@domain.com
+      smarthost: smtp-server:587
+      auth_username: username
+      auth_identity: identity
+      auth_password: password
       send_resolved: true
   
   - name: 'slack-notifications'
     slack_configs:
-    - channel: '#it-sysadmin'
+    - channel: '#CHANNEL_NAME'
       send_resolved: true
       title: '{{ template "custom_summary" . }}'
       text: '{{ template "custom_slack_message" . }}'
