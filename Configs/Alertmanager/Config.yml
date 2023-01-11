@@ -1,0 +1,58 @@
+global:
+  slack_api_url: 'https://hooks.slack.com/services/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'
+  resolve_timeout: 5s
+route:
+  group_wait: 30s
+  group_interval: 30s
+  receiver: 'litermi-notifications'
+  routes:
+    - match:
+        severity: 'critical'
+      continue: true
+      receiver: 'litermi-notifications'
+    - match:
+        severity: 'warning'
+      continue: true
+      receiver: 'litermi-notifications'
+    - match:
+        severity: 'critical'
+      continue: true
+      receiver: 'litermi-notifications2'
+    - match:
+        severity: 'critical'
+      continue: true
+      receiver: 'slack-notifications'
+    - match:
+        severity: 'warning'
+      receiver: 'slack-notifications'
+
+receivers:
+  - name: 'litermi-notifications'
+    email_configs:
+    - to: sysadmin@litermi.com
+      from: sysadmin-alerts@litermi.com
+      smarthost: smtp.gmail.com:587
+      auth_username: sysadmin-alerts@litermi.com
+      auth_identity: sysadmin-alerts@litermi.com
+      auth_password: L/H4sIxnQsw0D
+      send_resolved: true
+
+  - name: 'litermi-notifications2'
+    email_configs:
+    - to: prometheus@trillonario.com
+      from: sysadmin-alerts@litermi.com
+      smarthost: smtp.gmail.com:587
+      auth_username: sysadmin-alerts@litermi.com
+      auth_identity: sysadmin-alerts@litermi.com
+      auth_password: L/H4sIxnQsw0D
+      send_resolved: true
+  
+  - name: 'slack-notifications'
+    slack_configs:
+    - channel: '#it-sysadmin'
+      send_resolved: true
+      title: '{{ template "custom_summary" . }}'
+      text: '{{ template "custom_slack_message" . }}'
+
+templates:
+- '/alertmanager/notifications.tmpl'

@@ -1,0 +1,32 @@
+version: "3"
+services:
+  prometheus:
+    image: prom/prometheus:main
+    container_name: prometheus
+    tty: true
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus_data:/prometheus"
+      - "./Configs/Prometheus/Prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./Configs/Prometheus/Rules.yml:/etc/Rules.yml"
+      - "./Configs/Prometheus/ServiceDiscovery.yml:/etc/prometheus/ServiceDiscovery.yml"
+    command:
+      - '--config.file=/etc/prometheus/Prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    tty: true
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./grafana_data:/var/lib/grafana"
+      - "./Configs/Grafana/DataSources.yml:/etc/grafana/provisioning/datasources/datasources.yml"
+      - "./Configs/Grafana/Dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml"
+      - "./Configs/Grafana/GeneralStatusDashboard.yml:/etc/grafana/provisioning/dashboards/general-status-dashboard.json"
+      - "./Configs/Grafana/NodeExporterDashboard.yml:/etc/grafana/provisioning/dashboards/node-exporter-full-dashboard.json"
