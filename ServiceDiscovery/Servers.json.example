@@ -1,0 +1,18 @@
+[
+      {
+        "labels": {
+          "name": "Name"
+        },
+        "targets": [
+          "IP:9100"
+        ]
+      },
+      {
+        "labels": {
+          "name": "Name"
+        },
+        "targets": [
+          "IP:9100"
+        ]
+      }
+    ]
