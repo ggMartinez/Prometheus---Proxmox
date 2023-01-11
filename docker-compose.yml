@@ -8,7 +8,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - "./prometheus_data:/prometheus"
+      - "prometheus_data:/prometheus"
       - "./Configs/Prometheus/Prometheus.yml:/etc/prometheus/prometheus.yml"
       - "./Configs/Prometheus/Rules.yml:/etc/Rules.yml"
       - "./ServiceDiscovery:/etc/prometheus/ServiceDiscovery"
@@ -26,8 +26,11 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "./grafana_data:/var/lib/grafana"
+      - "grafana_data:/var/lib/grafana"
       - "./Configs/Grafana/DataSources.yml:/etc/grafana/provisioning/datasources/datasources.yml"
       - "./Configs/Grafana/Dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yml"
       - "./Configs/Grafana/GeneralStatusDashboard.yml:/etc/grafana/provisioning/dashboards/general-status-dashboard.json"
       - "./Configs/Grafana/NodeExporterDashboard.yml:/etc/grafana/provisioning/dashboards/node-exporter-full-dashboard.json"
+volumes:
+  grafana_data: {}
+  prometheus_data: {}
