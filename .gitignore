@@ -3,4 +3,4 @@ prometheus_data*
 alertmanager_data*
 *.swp
 *.DS_Store*
-ServerDiscovery/*.json
+ServiceDiscovery/*.json
