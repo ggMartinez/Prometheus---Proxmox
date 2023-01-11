@@ -1,5 +1,5 @@
 global:
-  scrape_interval:     30s
+  scrape_interval:     15s
   evaluation_interval: 5s
 
 # alerting:
@@ -13,7 +13,7 @@ global:
 
 scrape_configs:
 - job_name: 'Servers'
-  scrape_interval: 30s
+  scrape_interval: 15s
   file_sd_configs:
     - files: 
-      - 'ServiceDiscovery.json'
+      - 'ServiceDiscovery/*.json'
