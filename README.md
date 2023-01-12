@@ -7,6 +7,13 @@ Install Docker and Docker Compose on the server to run this. In CentOS run `yum 
 
 # How to use
 
+## Clone this repository
+First of all, clone this repository to the server with docker and docker compose that will run Prometheus, Alert Manager and Grafana:
+
+`git clone https://github.com/ggMartinez/prometheus.git`
+
+
+
 ## Add servers
 In the directory `ServiceDiscovery` you can add any json file with definition of servers to monitor. Follow the syntax of the example file:
 ```
@@ -50,7 +57,7 @@ receivers:
 	send_resolved: true
 ```
 ## Run Prometheus
-Just run:
+Just run inside this directory:
 `docker-compose up -d`
 
 After run, you can access to Grafana in the port 3000, and Prometheus in the port 9090 of the host where this is running.
