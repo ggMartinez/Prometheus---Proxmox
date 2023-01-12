@@ -18,11 +18,31 @@ services:
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--log.level=debug'
+  alertmanager:
+    image: prom/alertmanager:main
+    container_name: alertmanager
+    depends_on:
+      - prometheus
+    tty: true
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - "alertmanager_data:/data"
+      - "./Configs/AlertManager/Config.yml:/alertmanager/alertmanager.yml"
+      - "./Configs/AlertManager/Notification.tmpl:/alertmanager/Notification.tmpl"
+    command:
+      - '--config.file=/alertmanager/alertmanager.ymll'
+      - '--cluster.advertise-address=0.0.0.0:9093'
+      - '--storage.path=/data'
+      - '--log.level=debug'
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     tty: true
     restart: unless-stopped
+    depends_on:
+      - prometheus 
     ports:
       - "3000:3000"
     volumes:
@@ -34,3 +54,4 @@ services:
 volumes:
   grafana_data: {}
   prometheus_data: {}
+  alertmanager_data: {}
