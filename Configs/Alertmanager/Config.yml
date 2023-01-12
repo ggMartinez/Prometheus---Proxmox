@@ -1,5 +1,5 @@
 global:
-  slack_api_url: 'https://hooks.slack.com/services/T9J8LB9B3/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+  #slack_api_url: 'https://hooks.slack.com/services/T9J8LB9B3/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
   resolve_timeout: 5s
 route:
   group_wait: 30s
@@ -14,13 +14,13 @@ route:
         severity: 'warning'
       continue: true
       receiver: 'mail-notifications'
-    - match:
-        severity: 'critical'
-      continue: true
-      receiver: 'slack-notifications'
-    - match:
-        severity: 'warning'
-      receiver: 'slack-notifications'
+    # - match:
+    #     severity: 'critical'
+    #   continue: true
+    #   receiver: 'slack-notifications'
+    # - match:
+    #     severity: 'warning'
+    #   receiver: 'slack-notifications'
 
 receivers:
   - name: 'mail-notifications'
@@ -33,12 +33,12 @@ receivers:
       auth_password: password
       send_resolved: true
   
-  - name: 'slack-notifications'
-    slack_configs:
-    - channel: '#CHANNEL_NAME'
-      send_resolved: true
-      title: '{{ template "custom_summary" . }}'
-      text: '{{ template "custom_slack_message" . }}'
+  # - name: 'slack-notifications'
+  #   slack_configs:
+  #   - channel: '#CHANNEL_NAME'
+  #     send_resolved: true
+  #     title: '{{ template "custom_summary" . }}'
+  #     text: '{{ template "custom_slack_message" . }}'
 
 templates:
 - '/alertmanager/notifications.tmpl'
