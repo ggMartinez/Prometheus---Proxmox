@@ -5,6 +5,10 @@ services:
     container_name: prometheus
     tty: true
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1024m"
     ports:
       - "9090:9090"
     volumes:
@@ -25,6 +29,10 @@ services:
       - prometheus
     tty: true
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1024m"
     ports:
       - "9093:9093"
     volumes:
@@ -40,6 +48,10 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     tty: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1024m"
     restart: unless-stopped
     depends_on:
       - prometheus 
