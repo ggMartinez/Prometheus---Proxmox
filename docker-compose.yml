@@ -26,7 +26,7 @@ services:
     tty: true
     restart: unless-stopped
     ports:
-      - "9090:9090"
+      - "9093:9093"
     volumes:
       - "alertmanager_data:/data"
       - "./Configs/AlertManager/Config.yml:/alertmanager/alertmanager.yml"
