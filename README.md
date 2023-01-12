@@ -16,8 +16,39 @@ prom/node-exporter:latest \
 ```
 For more info on node exporter: [Node Exporter GitHub Page](https://github.com/prometheus/node_exporter)
 
+After run, you can access to Grafana in the port 3000, and Prometheus in the port 9090 of the host where this is running.
 
 # How to use
+
+## Add servers
+In the directory `ServiceDiscovery` you can add any json file with definition of servers to monitor. Follow the syntax of the example file:
+```
+[
+      {
+        "labels": {
+          "name": "Server 1"
+        },
+        "targets": [
+          "192.168.1.10:9100"
+        ]
+      }
+      {
+        "labels": {
+          "name": "Server 2"
+        },
+        "targets": [
+          "192.168.1.11:9100"
+        ]
+      }
+]
+   ```
+
+You can add all the json files that you want. No need to restart prometheus to catch them.
+
+Also, there's a section for service discovery for AWS in `Configs/Prometheus/Config.yml` commented, that you would like to check.
+
+
+## Alerts
 First edit `Configs/AlertManager/Config.yml` and modify the SMTP settings:
 ```
 receivers:
@@ -33,3 +64,5 @@ receivers:
 ```
 Then, run:
 `docker-compose up -d`
+
+
