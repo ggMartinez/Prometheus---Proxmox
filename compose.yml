@@ -14,7 +14,6 @@ services:
       - "./ProxmoxScrapeConfig.yml:/prometheus/ProxmoxScrapeConfig.yml"
       - "./Configs/Prometheus/Prometheus.yml:/etc/prometheus/prometheus.yml"
       - "./Configs/Prometheus/Rules.yml:/etc/Rules.yml"
-      - "./ServiceDiscovery:/etc/prometheus/ServiceDiscovery"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
