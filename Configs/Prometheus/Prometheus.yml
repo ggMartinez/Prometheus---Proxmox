@@ -2,38 +2,5 @@ global:
   scrape_interval:     15s
   evaluation_interval: 5s
 
-alerting:
-  alertmanagers:
-    - static_configs:
-       - targets:
-         - alertmanager:9093
-
-rule_files:
- - "Rules.yml"
-
-scrape_configs:
-- job_name: 'Servers'
-  scrape_interval: 15s
-  file_sd_configs:
-    - files: 
-      - 'ServiceDiscovery/*.json'
-
-
-# - job_name: 'AWS'
-#   scrape_interval: 15s
-#   ec2_sd_configs:
-#     - port: 9100
-#       region: sa-east-1
-#       access_key: ACCESS_KEY
-#       secret_key: REGION_KEY
-#       filters:
-#       - name: tag:Monitor
-#         values:
-#           - Prometheus
-#   relabel_configs:
-#     - source_labels: [__meta_ec2_tag_Name]
-#       replacement: '${1}'
-#       target_label: 'name'
-#     - source_labels: [__meta_ec2_public_ip]
-#       replacement: '${1}:9100'
-#       target_label: '__address__'
+scrape_config_files:
+    - /prometheus/ProxmoxScrapeConfig.yml

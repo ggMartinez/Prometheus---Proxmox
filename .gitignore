@@ -1,6 +1,5 @@
-grafana_data*
-prometheus_data*
-alertmanager_data*
+data*
+ProxmoxScrapeConfig.yml
 *.swp
 *.DS_Store*
-ServiceDiscovery/*.json
+

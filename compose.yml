@@ -1,8 +1,6 @@
-version: "3"
 services:
   prometheus:
     image: prom/prometheus:main
-    container_name: prometheus
     tty: true
     restart: unless-stopped
     logging:
@@ -13,6 +11,7 @@ services:
       - "9090:9090"
     volumes:
       - "prometheus_data:/prometheus"
+      - "./ProxmoxScrapeConfig.yml:/prometheus/ProxmoxScrapeConfig.yml"
       - "./Configs/Prometheus/Prometheus.yml:/etc/prometheus/prometheus.yml"
       - "./Configs/Prometheus/Rules.yml:/etc/Rules.yml"
       - "./ServiceDiscovery:/etc/prometheus/ServiceDiscovery"
@@ -23,10 +22,9 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--log.level=debug'
   alertmanager:
-    image: prom/alertmanager:main
-    container_name: alertmanager
     depends_on:
       - prometheus
+    image: prom/alertmanager:main
     tty: true
     restart: unless-stopped
     logging:
@@ -45,16 +43,15 @@ services:
       - '--storage.path=/data'
       - '--log.level=debug'
   grafana:
+    depends_on:
+      - prometheus
     image: grafana/grafana:latest
-    container_name: grafana
     tty: true
     logging:
       driver: "json-file"
       options:
         max-size: "1024m"
     restart: unless-stopped
-    depends_on:
-      - prometheus 
     ports:
       - "3000:3000"
     volumes:
